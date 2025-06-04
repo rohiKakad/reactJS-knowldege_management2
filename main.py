@@ -2,7 +2,7 @@
 # from turtle import title
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routes.login.loginRouter import router as api_login_router
+from app.routes.auth.authRouter import router as api_auth_router
 
 app = FastAPI(
     title="Knowledge management",
@@ -18,4 +18,4 @@ app.add_middleware(
     allow_headers=["*"],          # Accept any headers
 )
 
-app.include_router(api_login_router, prefix="/user", tags=["users"])
+app.include_router(api_auth_router, prefix="/user", tags=["users"])
