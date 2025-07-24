@@ -5,7 +5,7 @@ class AuthRepository:
         self.collection = collection
 
     def find_user_by_email(self,email:str, password:str):
-        return self.collection.find_one({"email":email, "password": password})
+        return self.collection.find_one({"email":email})
     
     def create_user(self,name:str,email:str,password:str, cpassword:str):
         existing_user = self.collection.find_one({"email": email})
@@ -20,7 +20,7 @@ class AuthRepository:
         result= self.collection.insert_one({
             "name":name,
             "email": email,
-            "password": hashed_pwd.decode('utf-8'), 
+            "password": hashed_pwd.decode('utf-8'),
             "cpassword": hashed_pwd.decode('utf-8')
         })
         return result.inserted_id

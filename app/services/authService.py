@@ -9,6 +9,9 @@ class AuthService:
 
     def is_user_valid(self,email:str, password:str):
         user = self.repo.find_user_by_email(email, password)
+        print(user)
+        print(password)
+        print(email)
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
             return True
         return False
@@ -20,5 +23,3 @@ class AuthService:
             raise e
         except Exception as e:
             raise Exception("Failed to create user") from e
-
-        
