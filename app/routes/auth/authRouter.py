@@ -13,7 +13,7 @@ controller = AuthController()
 @router.post("/login")
 def login(user: UserLogin): 
     if controller.get_user(user.email, user.password):
-        return {"message": "Login success"}
+        return {"message": "Login succeed"}
     raise HTTPException(status_code=401, detail="Invalid email or password")
 
 @router.post("/signup")
