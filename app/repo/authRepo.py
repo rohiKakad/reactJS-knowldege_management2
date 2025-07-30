@@ -4,7 +4,7 @@ class AuthRepository:
     def __init__(self,collection):
         self.collection = collection
 
-    def find_user_by_email(self,email:str, password:str):
+    def find_user_by_email(self,email:str):
         return self.collection.find_one({"email":email})
     
     def create_user(self,name:str,email:str,password:str, cpassword:str):

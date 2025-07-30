@@ -2,6 +2,6 @@ from pydantic import BaseModel, EmailStr
 
 class Signup(BaseModel):
     name:str
-    email:EmailStr
+    email:str
     password:str
     cpassword:str

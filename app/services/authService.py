@@ -19,11 +19,10 @@ class AuthService:
         self.repo = repo
 
     def is_user_valid(self,email:str, password:str):
-        user = self.repo.find_user_by_email(email, password)
+        user = self.repo.find_user_by_email(email)
         if user and bcrypt.checkpw(password.encode('utf-8'), user["password"].encode('utf-8')):
-            print(user["_id"])
             payload = {
-                "user_id": user["_id"],
+                "user_id": str(user["_id"]),
                 "email": user["email"],
                 "exp": datetime.datetime.utcnow()+datetime.timedelta(hours=2)
             }

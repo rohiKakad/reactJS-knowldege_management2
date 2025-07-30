@@ -3,6 +3,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routes.auth.authRouter import router as api_auth_router
+from app.routes.forms.formsRouter import router as api_forms_router
 
 app = FastAPI(
     title="Knowledge management",
@@ -19,3 +20,4 @@ app.add_middleware(
 )
 
 app.include_router(api_auth_router, prefix="/user", tags=["users"])
+app.include_router(api_forms_router, prefix="/forms", tags=["forms"])
