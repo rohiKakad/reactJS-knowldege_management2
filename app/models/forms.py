@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import List
+from typing import List, Dict, Any
 
 
 class FormData(BaseModel):
@@ -15,4 +15,4 @@ class FormData(BaseModel):
 
 class UpdateFormByID(BaseModel):
     id:str
-    update_data:dict
+    update_data:Dict[str, Any]

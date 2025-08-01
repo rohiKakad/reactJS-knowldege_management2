@@ -14,11 +14,12 @@ class FormsRepository:
         docs_json = dumps(docs)
         return loads(docs_json)
 
-    def form_update(self, id:str, update_data:dict):
-        result = self.collection.find_one_and_update(
-            {"_id": ObjectId(id)},
-            {"$set": update_data },
-            return_document=True
+    def form_update(self, form_id:str, update_data:dict):
+        form = self.collection.find_one({"_id":ObjectId(form_id)})
+        if not form:
+            return False
+        result = self.collection.update_one(
+            {"_id": ObjectId(form_id)},
+            {"$set": update_data}
         )
-        return result
-
+        return result.modified_count > 0
