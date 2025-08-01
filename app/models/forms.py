@@ -9,3 +9,10 @@ class FormData(BaseModel):
     assetManager: list[str]
     note: str
     isChecked: bool
+    status: str
+    createdOn: str
+    createdBy: str
+
+class UpdateFormByID(BaseModel):
+    id:str
+    update_data:dict

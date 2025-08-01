@@ -10,12 +10,6 @@ load_dotenv()
 
 router = APIRouter()
 controller = AuthController()
-app = FastAPI()
-
-@app.on_event("shutdown")
-def shutdown_event():
-    if controller.client:
-        controller.close_connection()
 
 @router.post("/login")
 def login(user: UserLogin):

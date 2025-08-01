@@ -15,3 +15,9 @@ class FormsController:
 
     def post_forms(self, form_data):
         return self.ser.post_data(form_data)
+
+    def get_all_forms(self):
+        return self.ser.get_all_forms()
+
+    def form_update(self, _id:str, data):
+        return self.ser.form_update(_id, data)

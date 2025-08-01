@@ -5,3 +5,4 @@ bcrypt~=4.3.0
 pydantic~=2.11.5
 PyJWT~=2.10.1
 pymongo~=4.13.0
+starlette~=0.46.2
