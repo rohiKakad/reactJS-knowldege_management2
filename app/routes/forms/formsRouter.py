@@ -46,6 +46,7 @@ def get_all_forms():
 @router.put("/form-update")
 def form_update(payload:UpdateFormByID):
     try:
+        print("id", payload.id)
         result = controller.form_update(payload.id,payload.update_data)
         if result:
             return {"message": "Form updated successfully", "_id": payload.id}

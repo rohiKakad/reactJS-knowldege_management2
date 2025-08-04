@@ -15,7 +15,7 @@ class FormsRepository:
         return loads(docs_json)
 
     def form_update(self, form_id:str, update_data:dict):
-        form = self.collection.find_one({"_id":ObjectId(form_id)})
+        form = self.collection.find({"_id":ObjectId(form_id)})
         if not form:
             return False
         result = self.collection.update_one(

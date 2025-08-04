@@ -11,5 +11,5 @@ class FormsService:
     def get_all_forms(self):
         return self.repo.get_all_forms()
 
-    def form_update(self, id:str, data):
-        return self.repo.form_update(id, data)
+    def form_update(self, form_id:str, data):
+        return self.repo.form_update(form_id, data)
