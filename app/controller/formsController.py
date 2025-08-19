@@ -21,3 +21,6 @@ class FormsController:
 
     def form_update(self, form_id:str, data):
         return self.ser.form_update(form_id, data)
+
+    def delete_form(self, form_id:str):
+        return self.ser.delete_form(form_id)

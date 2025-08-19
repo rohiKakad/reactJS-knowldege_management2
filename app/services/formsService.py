@@ -13,3 +13,6 @@ class FormsService:
 
     def form_update(self, form_id:str, data):
         return self.repo.form_update(form_id, data)
+
+    def delete_form(self, form_id:str):
+        return self.repo.delete_form(form_id)

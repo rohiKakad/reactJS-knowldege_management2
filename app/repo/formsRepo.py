@@ -1,4 +1,4 @@
-from bson import ObjectId
+from bson import ObjectId, errors
 from bson.json_util import dumps, loads
 
 
@@ -22,4 +22,22 @@ class FormsRepository:
             {"_id": ObjectId(form_id)},
             {"$set": update_data}
         )
-        return result.modified_count > 0
+        if result.matched_count == 0:
+            return "no_found"
+        elif result.matched_count == 0:
+            return "no_change"
+        else:
+            return "updated"
+
+    def delete_form(self, form_id):
+        try:
+            obj_id = ObjectId(form_id)
+        except errors.InvalidId:
+            return False
+
+        doc = self.collection.find_one({"_id": obj_id})
+        if doc:
+            result = self.collection.delete_one({"_id": ObjectId(obj_id)})
+            return result.deleted_count > 0
+        else:
+            return False

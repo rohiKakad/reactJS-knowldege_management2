@@ -11,7 +11,7 @@ import datetime
 import secrets
 
 load_dotenv()
-SECRET_KEY = secrets.token_urlsafe(32)
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 class AuthService:

@@ -1,11 +1,14 @@
 from fastapi import HTTPException
 from  fastapi import  APIRouter
+from fastapi.params import Depends
 from starlette.responses import JSONResponse
 
 from app.controller.formsController import FormsController
 from app.models.forms import FormData, UpdateFormByID
 import json
 from bson import ObjectId
+
+from app.utils.auth_handler import verify_token
 
 router = APIRouter()
 controller = FormsController()
@@ -32,7 +35,7 @@ def convert_objected(obj):
     raise TypeError(f"Object of type {type(obj)} is not JSON serializable")
 
 @router.get("/get-all-forms")
-def get_all_forms():
+def get_all_forms(user=Depends(verify_token)):
     try:
         document = controller.get_all_forms()
         json_doc = json.loads(json.dumps(document, default=convert_objected))
@@ -44,15 +47,32 @@ def get_all_forms():
 
 
 @router.put("/form-update")
-def form_update(payload:UpdateFormByID):
+def form_update(payload:UpdateFormByID, user=Depends(verify_token)):
     try:
-        print("id", payload.id)
         result = controller.form_update(payload.id,payload.update_data)
-        if result:
+        if result == "updated":
             return {"message": "Form updated successfully", "_id": payload.id}
+        elif result == "no_change":
+            return {"message": "No records are changed", "_id":payload.id}
+        elif result == "not_found":
+            return {"message": "Form not found"}
         else:
-            raise ValueError("Forms not found or updated")
+            raise ValueError("Unexpected update status")
     except ValueError as e:
         raise  HTTPException(status_code=400, detail=str(e))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.delete("/delete_form")
+def delete_form(form_id:str, user=Depends(verify_token)):
+    try:
+        result = controller.delete_form(form_id)
+        if result:
+            return {"message": "Form deleted successfully", "_id": form_id}
+        else:
+            raise ValueError("Form id not found or deleted")
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
